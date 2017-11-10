@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Report Fraud - Fraud Web App System</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/now-ui-kit.css?v=1.1.0" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+
+    <meta name="keywords" content="fraud, system, web, App, web App system, Fraud System, Fraud Case, Fraud System, Report Fraud. Scam, Report Scam">
+    <meta name="description" content="To keep the payment environment secure and sane, it makes sense to have a trusted system that can be used to verify phone numbers, emails and bank accounts that may be involved in SCAM or Fraud">
+</head>
+
+<!-- <body class="landing-page sidebar-collapse"> -->
+<body class="landing-page sidebar-collapse" onload="redirect()">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-info fixed-top navbar-transparent" color-on-scroll="300">
+        <div class="container">
+            <div class="dropdown button-dropdown">
+                <a href="#home" class="dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
+                    <span class="button-bar"></span>
+                    <span class="button-bar"></span>
+                    <span class="button-bar"></span>
+                </a>
+                <!--  -->
+            </div>
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="#">
+                    Fraud Web App System
+                </a>
+                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" data-nav-image="assets/img/blurred-image-1.jpg">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/report.html">Report Fraud</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#report">All Frauds</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="logOut()">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="wrapper">
+        <div class="page-header page-header-small">
+            <div class="page-header-image" data-parallax="true" style="background-image: url('assets/img/bg8.jpg');">
+            </div>
+            <div class="container">
+                <div class="content-center">
+                    <h6 class="">Enter search keyword (e.g, account number, website, email, phone number)</h6>
+                    <div class="text-center">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span class="fa fa-search"></span>
+                                <input placeholder="Search term" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section section-team">
+            <h2 class="title text-center">
+                Fill the form below to Report a Fraud Case
+            </h2>
+            <h6 class="text-center" id="reportError">
+            </h6>
+            <div class="container">
+            <div class="alert alert-success" role="alert" id="successReport" style="visibility:hidden">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="now-ui-icons ui-2_like"></i>
+                    </div>
+                    Your Report has been Saved Successfully.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Scammer's Name</label>
+                    <div class="form-group">
+                        <input type="text" value="" id="scammer_name" placeholder="Scammer's Name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Scammer's Real Name</label>
+                    <div class="form-group">
+                        <input type="text" value="" id="scammer_real_name" placeholder="Scammer's Real Name" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Total Amount Involved</label>
+                    <div class="form-group">
+                        <input type="text" value="" id="amount_scammed_off" placeholder="₦" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Severity of Fraud</label>
+                    <div class="form-group">
+                        <select id="severity_id" name="" class="form-control">
+                            <option value="1">Low</option>
+                            <option value="2">Average</option>
+                            <option value="3">High</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Scam Start Date</label>
+                    <input type="text" id="scam_start_date" class="form-control date-picker" value="10/05/2016"/ data-datepicker-color="">
+                </div>
+                <div class="col-md-6">
+                    <label>Scam Realization Date</label>
+                    <input type="text" id="scam_realization_date" class="form-control date-picker" value="10/05/2016"/ data-datepicker-color="">
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Item Type</label>
+                    <div class="form-group">
+                        <select id="item_type_id" name="" class="form-control">
+                            <option value="1">Products</option>
+                            <option value="2">Services</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Item Name </label>
+                    <div class="form-group">
+                        <input type="text" name="" id="item_name" class="form-control" placeholder="Name of Item">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Fraud Category</label>
+                    <div class="form-group">
+                        <select id="fraud_category_id" name="" class="form-control" >
+                            <option value="1">Fake Event/Programs</option>
+                            <option value="2">Partial/Poor Quality Products Delivery</option>
+                            <option value="3">Fake/Undelivered Product/Service Offerings</option>
+                            <option value="4">Fake/Phishing Websites</option>
+                            <option value="5">Yahoo/African Prince Scam</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tabbed">
+                        <input id="tab-one" type="checkbox" style="display: none" name="tabs">
+                        <label for="tab-one" class="accord-label">Account Information</label>
+                        <div class="tab-content"> 
+                            <div>  
+                                <div class="row account-field">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="account-information" placeholder="Account Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <select id="bank-id" name="" class="form-control">
+                                                <option value="1">First Bank PLC</option>
+                                                <option value="2">Union Bank of Nigeria PLC</option>
+                                                <option value="3">Zenith Bank PLC</option>
+                                                <option value="4">Fidelity Bank PLC</option>
+                                                <option value="5">United Bank for Africa PLC</option>
+                                                <option value="6">Sky Bank PLC</option>
+                                                <option value="7">Key Stone PLC</option>
+                                                <option value="8">Stanbic IBTC Bank PLC</option>
+                                                <option value="9">GuarantyTrust Bank PLC</option>
+                                                <option value="10">Diamond Bank PLC</option>
+                                                <option value="11">Access Bank PLC</option>
+                                                <option value="12">Standered Chartered Bank Nigeria LTD</option>
+                                                <option value="13">Wema Bank PLC</option>
+                                                <option value="14">Ecobank Nigeria PLC</option>
+                                                <option value="15">Unity Bank PLC</option>
+                                                <option value="16">Heritage Bank PLC</option>
+                                                <option value="17">Afribank Nigeria PLC</option>
+                                                <option value="18">Enterprise Bank LTD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="tel" class="form-control" id="account-number" placeholder="Account Number">
+                                        </div>
+                                    </div>                    
+                                </div>
+                            </div> 
+                            <button class="btn btn-success add-button" data-selector=".account-field" type="button">Add more</button> 
+                            <button class="btn btn-danger remove-button" data-selector=".account-field" type="button">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tabbed">
+                        <input id="tab-two" type="checkbox" style="display: none" name="tabs">
+                        <label for="tab-two" class="accord-label">Email</label>
+                        <div class="tab-content">
+                            <div>
+                                <div class="row email-field">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" id="email" placeholder="Scammer's Email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <button class="btn btn-success add-button" data-selector=".email-field" type="button">Add more</button> 
+                            <button class="btn btn-danger remove-button" data-selector=".email-field" type="button">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tabbed">
+                        <input id="tab-three" type="checkbox" style="display: none" name="tabs">
+                        <label for="tab-three" class="accord-label">Website</label>
+                        <div class="tab-content">
+                            <div>
+                                <div class="row website-field">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="url" class="form-control" id="website" placeholder="Website Involved">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="bank-id" name="" class="form-control">
+                                                <option value="1">First Bank PLC</option>
+                                                <option value="2">Union Bank of Nigeria PLC</option>
+                                                <option value="3">Zenith Bank PLC</option>
+                                                <option value="4">Fidelity Bank PLC</option>
+                                                <option value="5">United Bank for Africa PLC</option>
+                                                <option value="6">Sky Bank PLC</option>
+                                                <option value="7">Key Stone PLC</option>
+                                                <option value="8">Stanbic IBTC Bank PLC</option>
+                                                <option value="9">GuarantyTrust Bank PLC</option>
+                                                <option value="10">Diamond Bank PLC</option>
+                                                <option value="11">Access Bank PLC</option>
+                                                <option value="12">Standered Chartered Bank Nigeria LTD</option>
+                                                <option value="13">Wema Bank PLC</option>
+                                                <option value="14">Ecobank Nigeria PLC</option>
+                                                <option value="15">Unity Bank PLC</option>
+                                                <option value="16">Heritage Bank PLC</option>
+                                                <option value="17">Afribank Nigeria PLC</option>
+                                                <option value="18">Enterprise Bank LTD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success add-button" data-selector=".website-field" type="button">Add more</button> 
+                            <button class="btn btn-danger remove-button" data-selector=".website-field" type="button">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tabbed">
+                        <input id="tab-four" type="checkbox" style="display: none" name="tabs">
+                        <label for="tab-four" class="accord-label">Mobile Number</label>
+                        <div class="tab-content">
+                            <div>
+                                <div class="row mobile-field">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="url" class="form-control" id="mobile-number" placeholder="Website Used">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success add-button" data-selector=".mobile-field" type="button">Add more</button> 
+                            <button class="btn btn-danger remove-button" data-selector=".moblie-field" type="button">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tabbed">
+                        <input id="tab-five" type="checkbox" style="display: none" name="tabs">
+                        <label for="tab-five" class="accord-label">Fraudster Image</label>
+                        <div class="tab-content">
+                            <div class="row picture">
+                                <div class="form-group">
+                                    <input type="file" id="file" name="pic" id="picture" accept="image/*">
+                                </div>
+                                <label class=""><input type="radio" value="1"name="is_fraudster">Yes</label>
+                                <label class=""><input type="radio" value="0" name="is_fraudster">No</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-info" onclick="reportFraud()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <footer class="footer footer-default">
+            <div class="container">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#aboutsecapay">
+                                About Secapay
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#secapytemplates">
+                                Our Templates
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright">
+                    &copy;
+                    <script>
+                    document.write(new Date().getFullYear())
+                    </script>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+<!-- api script -->
+<script src="assets/node_modules/axios/dist/axios.min.js"></script>
+<script src="assets/js/main.js"></script>
+<!-- moment.js -->
+<script src="assets/js/moment.js"></script>
+<!--   Core JS Files   -->
+<script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<!-- <script src="assets/js/plugins/bootstrap-switch.js"></script> -->
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+<script src="assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
+<!-- Share Library etc -->
+<script src="assets/js/plugins/jquery.sharrre.js" type="text/javascript"></script>
+<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+<script src="assets/js/now-ui-kit.js?v=1.1.0" type="text/javascript"></script>
+
+<!-- accodion script -->
+<script type="text/javascript">
+$('.add-button').on('click', function(e){
+            //get the first element for the add button selector
+            var firstElement = $($(this).data('selector'))[0];
+            //find parent of this first element and append HTML to it
+            $(firstElement).parent().append(firstElement.outerHTML);
+        });
+$('.remove-button').on('click', function(e){
+    e.preventDefault();
+    var els = $($(this).data('selector'));
+    if(els.length == 1){
+        return;
+    }
+    els.last().remove();
+});
+</script>
+
+
+</html>
