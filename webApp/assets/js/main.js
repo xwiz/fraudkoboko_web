@@ -156,12 +156,65 @@ function userCase(){
 	};
 	axios.get('http://localhost:8000/api/v1/users/me', config)
 	.then(function (response){
+		document.getElementById('searchHeader').style.visibility = "visible";
 		var id = response.data.user.id
 		axios.get('http://localhost:8000/api/v1/frauds/user/' + id)
-		.then (function (response){
-			console.log(response.data.data);
-		})
+		.then(function (response){
+			$('#allFrauds').empty();
+			response.data.data.forEach(function($fraud){
+				var account = $fraud.fraud_accounts.data;
+				var email = $fraud.fraud_emails.data;
+				var website = $fraud.fraud_websites.data;
+				var c_account = "";
+				var c_email = "";
+				var c_website = "";
 
+				if(account.length == 0){
+					c_account = "........";
+				}
+				else{
+					$fraud.fraud_accounts.data.forEach(function($account){
+						if(c_account.length == 0){
+							c_account += $account.account_no
+						}
+						else{
+							c_account += ", " + $account.account_no
+						}
+					})
+				}
+				if(email.length == 0){
+					c_email = "........";
+				}
+				else{
+					$fraud.fraud_emails.data.forEach(function($email){
+						if(c_email.length == 0){
+							c_email += $email.email
+						}
+						else{
+							c_email += ", " + $email.email
+
+						}
+					})
+				}
+				if(website.length == 0){
+					c_website = "........";
+				}
+				else{
+					$fraud.fraud_websites.data.forEach(function($website){
+						if(c_website.length == 0){
+							c_website += $website.website_url
+						}
+						else{
+							c_website += ", " + $website.website_url
+						}
+					})
+				}
+				$('#allFrauds').append("<div class=\"card\"><div class=\"card-header\"><div class=\"row\"><div class=\"col-md-2\">" + $fraud.scammer_name + "</div><div class=\"col-md-2\">" + $fraud.scammer_real_name + "</div><div class=\"col-md-2\">" + c_account + "</div><div class=\"col-md-2\">"+ c_email + "</div><div class=\"col-md-2\">"+ c_website + "</div><div class=\"col-md-2\">" + "<button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\" data-target=\"#viewFullFraudModal\">"+"Show Full"+"</button>" + "</div></div></div></div>")
+			})
+		})
+		.catch(function (error) {
+			// console.log(error);
+		});
 	})
 }
 
@@ -199,18 +252,70 @@ function deleteUser(){
  *	Logs User out
  *
  */
- function logOut(){
- 	window.sessionStorage.removeItem('token');
+function logOut(){
+	window.sessionStorage.removeItem('token');
  	window.location.href = "C:/xampp/htdocs/consume/webApp/index.html";
- }
+}
 
 /*
 *	Show All reported fraud Cases
 */
 function showAllFrauds(){
 	axios.get('http://localhost:8000/api/v1/frauds')
-	.then(function (response) {
-		console.log(response.data);
+	.then(function (response){
+		document.getElementById('searchHeader').style.visibility = "visible";
+		$('#allFrauds').empty();
+ 		$('#searchResult').empty();
+		response.data.data.forEach(function($fraud){
+			var account = $fraud.fraud_accounts.data;
+			var email = $fraud.fraud_emails.data;
+			var website = $fraud.fraud_websites.data;
+			var c_account = "";
+			var c_email = "";
+			var c_website = "";
+
+			if(account.length == 0){
+				c_account = "........";
+			}
+			else{
+				$fraud.fraud_accounts.data.forEach(function($account){
+					if(c_account.length == 0){
+						c_account += $account.account_no
+					}
+					else{
+						c_account += ", " + $account.account_no
+					}
+				})
+			}
+			if(email.length == 0){
+				c_email = "........";
+			}
+			else{
+				$fraud.fraud_emails.data.forEach(function($email){
+					if(c_email.length == 0){
+						c_email += $email.email
+					}
+					else{
+						c_email += ", " + $email.email
+
+					}
+				})
+			}
+			if(website.length == 0){
+				c_website = "........";
+			}
+			else{
+				$fraud.fraud_websites.data.forEach(function($website){
+					if(c_website.length == 0){
+						c_website += $website.website_url
+					}
+					else{
+						c_website += ", " + $website.website_url
+					}
+				})
+			}
+			$('#allFrauds').append("<div class=\"card\"><div class=\"card-header\"><div class=\"row\"><div class=\"col-md-2\">" + $fraud.scammer_name + "</div><div class=\"col-md-2\">" + $fraud.scammer_real_name + "</div><div class=\"col-md-2\">" + c_account + "</div><div class=\"col-md-2\">"+ c_email + "</div><div class=\"col-md-2\">"+ c_website + "</div><div class=\"col-md-2\">" + "<button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\" data-target=\"#viewFullFraudModal\">"+"Show Full"+"</button>" + "</div></div></div></div>")
+		})
 	})
 	.catch(function (error) {
 		console.log(error);
@@ -305,7 +410,7 @@ function reportFraud(){
 			fraudSuccessResult.style.visibility = "visible";
 		})
 		.catch(function (error){
-			fraudErrorResult.innerHTML = "<style=color:red>"+"Please check your submitted fields, Amount Scammed Off and Scammer's Name are Required!";
+			fraudErrorResult.innerHTML = "Please check your submitted fields, Amount Scammed Off and Scammer's Name are Required!";
 		});
 	})
 }
@@ -340,72 +445,73 @@ function updateFraud(){
  *
  */
 function search(){
-	var keyword = document.getElementById('searchbox').value;
-	var searcherror = document.getElementById('searcherror');
-	var header = document.getElementById('searchHeader');
+ 	var keyword = document.getElementById('searchbox').value;
+ 	var searcherror = document.getElementById('searcherror');
+ 	var header = document.getElementById('searchHeader');
 
-	axios.get('http://localhost:8000/api/v1/frauds/search?keyword=' + keyword)
-	.then(function (response){
-		if (keyword == "" | !response.data.data){
-			searcherror.innerHTML = "<b>"+" Oops! Sorry, I couldn't satisfy your Expectation(s)."+"</b>";
-			return;
-		}
+ 	axios.get('http://localhost:8000/api/v1/frauds/search?keyword=' + keyword)
+ 	.then(function (response){
+ 		if (keyword == "" | !response.data.data){
+ 			searcherror.innerHTML = "<b>"+" Oops! Sorry, I couldn't satisfy your Expectation(s)."+"</b>";
+ 			return;
+ 		}
 
-		searcherror.innerHTML = "";
-		header.style.visibility = "visible";
-		$('#searchResult').empty();
-		response.data.data.forEach(function($fraud){
-			var account = $fraud.fraud_accounts.data;
-			var email = $fraud.fraud_emails.data;
-			var website = $fraud.fraud_websites.data;
-			var c_account = "";
-			var c_email = "";
-			var c_website = "";
+ 		searcherror.innerHTML = "";
+ 		header.style.visibility = "visible";
+ 		$('#searchResult').empty();
+ 		$('#allFrauds').empty();
+ 		response.data.data.forEach(function($fraud){
+ 			var account = $fraud.fraud_accounts.data;
+ 			var email = $fraud.fraud_emails.data;
+ 			var website = $fraud.fraud_websites.data;
+ 			var c_account = "";
+ 			var c_email = "";
+ 			var c_website = "";
 
-			if(account.length == 0){
-				c_account = "........";
-			}
-			else{
-				$fraud.fraud_accounts.data.forEach(function($account){
-					if(c_account.length == 0){
-						c_account += $account.account_no
-					}
-					else{
-						c_account += ", " + $account.account_no
+ 			if(account.length == 0){
+ 				c_account = "........";
+ 			}
+ 			else{
+ 				$fraud.fraud_accounts.data.forEach(function($account){
+ 					if(c_account.length == 0){
+ 						c_account += $account.account_no
+ 					}
+ 					else{
+ 						c_account += ", " + $account.account_no
 
-					}
-				})
-			}
-			if(email.length == 0){
-				c_email = "........";
-			}
-			else{
-				$fraud.fraud_emails.data.forEach(function($email){
-					if(c_email.length == 0){
-						c_email += $email.email
-					}
-					else{
-						c_email += ", " + $email.email
+ 					}
+ 				})
+ 			}
+ 			if(email.length == 0){
+ 				c_email = "........";
+ 			}
+ 			else{
+ 				$fraud.fraud_emails.data.forEach(function($email){
+ 					if(c_email.length == 0){
+ 						c_email += $email.email
+ 					}
+ 					else{
+ 						c_email += ", " + $email.email
 
-					}
-				})
-			}
-			if(website.length == 0){
-				c_website = "........";
-			}
-			else{
-				$fraud.fraud_websites.data.forEach(function($website){
-					if(c_website.length == 0){
-						c_website += $website.website_url
-					}
-					else{
-						c_website += ", " + $website.website_url
+ 					}
+ 				})
+ 			}
+ 			if(website.length == 0){
+ 				c_website = "........";
+ 			}
+ 			else{
+ 				$fraud.fraud_websites.data.forEach(function($website){
+ 					if(c_website.length == 0){
+ 						c_website += $website.website_url
+ 					}
+ 					else{
+ 						c_website += ", " + $website.website_url
 
-					}
-				})
-			}
-			$('#searchResult').append("<div class=\"card\"><div class=\"card-header\"><div class=\"row\"><div class=\"col-md-2\">" + $fraud.scammer_name + "</div><div class=\"col-md-2\">" + $fraud.scammer_real_name + "</div><div class=\"col-md-2\">" + c_account + "</div><div class=\"col-md-2\">"+ c_email + "</div><div class=\"col-md-2\">"+ c_website + "</div><div class=\"col-md-2\">" + "<button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\" data-target=\"#viewFullFraudModal\">"+"Show Full"+"</button>" + "</div></div></div></div>")
-		})
+ 					}
+ 				})
+ 			}
+ 			$('#searchResult').append("<div class=\"card\"><div class=\"card-header\"><div class=\"row\"><div class=\"col-md-2\">" + $fraud.scammer_name + "</div><div class=\"col-md-2\">" + $fraud.scammer_real_name + "</div><div class=\"col-md-2\">" + c_account + "</div><div class=\"col-md-2\">"+ c_email + "</div><div class=\"col-md-2\">"+ c_website + "</div><div class=\"col-md-2\">" + "<button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\" data-target=\"#viewFullFraudModal\">"+"Show Full"+"</button>" + "</div></div></div></div>")
+ 		})
 	})
 	.catch(function (error){
 		//console.log(error);
@@ -415,4 +521,4 @@ function search(){
 /*
  *
  *
-*/
+ */

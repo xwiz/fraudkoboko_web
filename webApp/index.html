@@ -21,7 +21,7 @@
 
 <body class="landing-page sidebar-collapse" onload="authUser()">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent" color-on-scroll="300">
+    <nav class="navbar navbar-expand-lg bg-info fixed-top navbar-transparent" color-on-scroll="300">
         <div class="container">
             <div class="dropdown button-dropdown">
                 <a href="#home" class="dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
@@ -45,6 +45,9 @@
                 <div class = "" id="yesUser" style="visibility:hidden">
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/profile.html">My Profile</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" onclick="logOut()">Log Out</a>
                         </li>
                     </ul>
@@ -56,6 +59,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="modal" data-target="#registrationModal">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#loginModal">All Frauds</a>
                         </li>
                     </ul>
                 </div>
@@ -98,7 +104,7 @@
                 </form>
                 <!-- redirect to user profile is login is sucessful -->
                 <div class="modal-footer text-center">
-                        <a href="#" class="btn btn-primary btn-round btn-lg btn-block" onclick="checkEmptyLoginDetails()">Get Started</a>
+                    <a href="#" class="btn btn-primary btn-round btn-lg btn-block" onclick="checkEmptyLoginDetails()">Get Started</a>
                 </div>
                 <div class="modal-footer">
                     <a href="#forgot" class="btn btn-neutral"></a>
@@ -142,242 +148,179 @@
                             </div>
                             <div class=""  id="lnameerror"></div>
                         </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-envelope-o"></i>
-                                </span>
-                                <input type="email" id="email" class="form-control" placeholder="email@email.com">
-                            </div>
-                            <div class=""  id="emailerror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-phone"></i>
-                                </span>
-                                <input type="text" id="phone_number" class="form-control" placeholder="Phone Number">
-                            </div>
-                            <div class=""  id="phoneerror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-key"></i>
-                                </span>
-                                <input type="password" id="password" class="form-control" placeholder="password">
-                            </div>
-                            <div class=""  id="passworderror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-key"></i>
-                                </span>
-                                <input type="password" id="c_password" class="form-control" placeholder="confirm-password">
-                            </div>
-                            <div class="" style="color:red; font-size:11px;" id="validPword"></div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                            <input type="email" id="email" class="form-control" placeholder="email@email.com">
+                        </div>
+                        <div class=""  id="emailerror"></div>
+                    </div><div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        <input type="text" id="phone_number" class="form-control" placeholder="Phone Number">
+                    </div>
+                    <div class=""  id="phoneerror"></div>
+                </div><div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-key"></i>
+                    </span>
+                    <input type="password" id="password" class="form-control" placeholder="password">
+                </div>
+                <div class=""  id="passworderror"></div>
+            </div><div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-key"></i>
+                </span>
+                <input type="password" id="c_password" class="form-control" placeholder="confirm-password">
+            </div>
+            <div class="" style="color:red; font-size:11px;" id="validPword"></div>
+        </div>
+    </div>
+</form>
+<div class="modal-footer">
+    <!-- shows a success/congratulations message if registration is successfull -->
+    <button type="submit" class="btn btn-success" onclick="validate()">Sign up</button>
+    <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</button>
+</div>
+
+</div>
+</div>
+</div>
+<!-- registration modal ends here -->
+<!-- view full Fraud case result modal starts here -->
+<div class="modal fade" id="viewFullFraudModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="title title-up" id="myModalLabel">FRAUD CASE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+
+            <!-- success message -->
+            
+
+        </div>
+    </div>
+</div>
+<!-- Fraud case modal result ends here -->
+
+
+<div class="wrapper">
+    <div class="page-header page-header-small">
+        <div class="page-header-image" data-parallax="true" style="background-image: url('assets/img/bg8.jpg');">
+        </div>
+        <div class="container">
+            <div class="content-center">
+                <h6 class="">Enter search keyword (e.g, account number, website, email, phone number)</h6>
+                <div class="text-center">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <span class="fa fa-search"></span>
+                            <input type="text"  value="" class="form-control" placeholder="Search term" onkeypress="handle(event)" data-toggle="tooltip" data-placement="left" id = "searchbox" title="Hit the Enter key after typing your search term"/>
+                        </div>
+                        <div id="searcherror" style="color:red;">
                         </div>
                     </div>
-                </form>
-                    <div class="modal-footer">
-                        <!-- shows a success/congratulations message if registration is successfull -->
-                        <button type="submit" class="btn btn-success" onclick="validate()">Sign up</button>
-                         <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</button>
-                    </div>
-
+                </div>
             </div>
         </div>
     </div>
-    <!-- registration modal ends here -->
-    <!-- view full Fraud case result modal starts here -->
-    <div class="modal fade" id="viewFullFraudModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="title title-up" id="myModalLabel">SIGN UP</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
 
-                <!-- success message -->
-                <div class="col-md-12">
-                    <div class="panel-body" style="color:green;text-align:center;" id="message"></div>
-                </div>
-                <!--  -->
-                <form class="form" method="" action="">
-                    <div class="modal-body">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-user-o"></i>
-                                </span>
-                                <input type="text" id="first_name" class="form-control" placeholder="First Name...">
-                            </div>
-                            <div class="" id="fnameerror"></div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-user-o"></i>
-                                </span>
-                                <input type="text" id="last_name" class="form-control" placeholder="Last Name...">
-                            </div>
-                            <div class=""  id="lnameerror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-envelope-o"></i>
-                                </span>
-                                <input type="email" id="email" class="form-control" placeholder="email@email.com">
-                            </div>
-                            <div class=""  id="emailerror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-phone"></i>
-                                </span>
-                                <input type="text" id="phone_number" class="form-control" placeholder="Phone Number">
-                            </div>
-                            <div class=""  id="phoneerror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-key"></i>
-                                </span>
-                                <input type="password" id="password" class="form-control" placeholder="password">
-                            </div>
-                            <div class=""  id="passworderror"></div>
-                        </div><div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-key"></i>
-                                </span>
-                                <input type="password" id="c_password" class="form-control" placeholder="confirm-password">
-                            </div>
-                            <div class="" style="color:red; font-size:11px;" id="validPword"></div>
+    <div class="section section-team text-center">
+        <div class="container-fluid" id="searchHeader" style="visibility:hidden">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-block">
+                        <div class="row">
+                            <h6 class="col-md-2 card-title">
+                                scammer's name
+                            </h6>
+                            <h6 class="col-md-2 card-title">
+                                scammer's real name
+                            </h6>
+                            <h6 class="col-md-2 card-title">
+                                account number
+                            </h6>
+                            <h6 class="col-md-2 card-title">
+                                email
+                            </h6>
+                            <h6 class="col-md-2 card-title">
+                                website
+                            </h6>
+
                         </div>
                     </div>
-                </form>
-                    <div class="modal-footer">
-                        <!-- shows a success/congratulations message if registration is successfull -->
-                        <button type="submit" class="btn btn-success" onclick="validate()">Sign up</button>
-                         <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</button>
-                    </div>
-
+                </div>
             </div>
+        </div>
+
+        <div class="container-fluid" id="searchResult">
         </div>
     </div>
-    <!-- Fraud case modal result ends here -->
 
 
-    <div class="wrapper">
-        <div class="page-header page-header-small">
-            <div class="page-header-image" data-parallax="true" style="background-image: url('assets/img/bg8.jpg');">
-            </div>
-            <div class="container">
-                <div class="content-center">
-                    <h6 class="">Enter search keyword (e.g, account number, website, email, phone number)</h6>
-                    <div class="text-center">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <span class="fa fa-search"></span>
-                                <input type="text"  value="" class="form-control" placeholder="Search term" onkeypress="handle(event)" data-toggle="tooltip" data-placement="left" id = "searchbox" title="Hit the Enter key after typing your search term"/>
-                            </div>
-                            <div id="searcherror" style="color:red;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <footer class="footer footer-default">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#aboutsecapay">
+                            About Secapay
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#secapytemplates">
+                            Our Templates
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                <script>
 
-        <div class="section section-team text-center">
-            <div class="container-fluid" id="searchHeader" style="visibility:hidden">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-block">
-                            <div class="row">
-                                <h6 class="col-md-2 card-title">
-                                    scammer's name
-                                </h6>
-                                <h6 class="col-md-2 card-title">
-                                    scammer's real name
-                                </h6>
-                                <h6 class="col-md-2 card-title">
-                                    account number
-                                </h6>
-                                <h6 class="col-md-2 card-title">
-                                    email
-                                </h6>
-                                <h6 class="col-md-2 card-title">
-                                    website
-                                </h6>
+                document.write(new Date().getFullYear())
+                </script>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-fluid" id="searchResult">
             </div>
         </div>
+    </footer>
+</div>
+<script>
+    // validate password and confirm password field before passing data to Api
+    function validate(){
+        var pword = document.getElementById('password').value;
+        var c_pword = document.getElementById('c_password').value;
+        var messagepword = document.getElementById('validPword');
+        if (pword !== c_pword){
+            messagepword.innerHTML = "Passwords doesn't match!";
+        }
+        else{
 
+            messagepword.innerHTML = "";
+            registerUser();
+        }
+    }
 
+    function checkEmptyLoginDetails(){
+        var logemail = document.getElementById('loginemail').value;
+        var logpword = document.getElementById('loginpassword').value;
+        var loginerror = document.getElementById('validlogin');
+        if(logemail == ""|logpword == ""){
+            loginerror.innerHTML = "<b>"+"Please fill up appropriate field."+"</b>"
+            return;
 
-        <footer class="footer footer-default">
-            <div class="container">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="#aboutsecapay">
-                                About Secapay
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#secapytemplates">
-                                Our Templates
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="copyright">
-                    &copy;
-                    <script>
+        }else {
+            authenticateUser();
+        }
 
-                        document.write(new Date().getFullYear())
-                    </script>
-
-                    <script>
-                    // validate password and confirm password field before passing data to Api
-                        function validate(){
-                            var pword = document.getElementById('password').value;
-                            var c_pword = document.getElementById('c_password').value;
-                            var messagepword = document.getElementById('validPword');
-                            if (pword !== c_pword){
-                                messagepword.innerHTML = "Passwords doesn't match!";
-                            }
-                            else{
-
-                                messagepword.innerHTML = "";
-                                registerUser();
-                            }
-                        }
-
-                        function checkEmptyLoginDetails(){
-                            var logemail = document.getElementById('loginemail').value;
-                            var logpword = document.getElementById('loginpassword').value;
-                            var loginerror = document.getElementById('validlogin');
-                            if(logemail == ""|logpword == ""){
-                                loginerror.innerHTML = "<b>"+"Please fill up appropriate field."+"</b>"
-                                return;
-
-                            }else {
-                                authenticateUser();
-                            }
-
-                        }
-                    </script>
-                </div>
-            </div>
-        </footer>
-    </div>
+    }
+</script>
 </body>
 
 <!-- api script -->
