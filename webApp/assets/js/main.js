@@ -35,6 +35,13 @@ function authUser(){
 // shows tooltip on search field
 $('[data-toggle="tooltip"]').tooltip();
 
+// $(window).on('shown.bs.modal', function(){
+//     $('#viewFullFraudModal').modal('show');
+
+//             alert('fjnfdjgnjgn');
+//         });
+//     })
+
 // run search term
 function handle(e){
 	if(e.keyCode === 13){
@@ -76,7 +83,7 @@ function registerUser(){
 		mail.innerHTML = "";
 		phone.innerHTML = "";
 		pass.innerHTML = "";
-		success.innerHTML = response.data.message;
+		success.innerHTML = "Congratulations, New User created Successfully!!! Please Click Login to continue";
 	})
 	.catch(function (error){
 		
@@ -136,6 +143,9 @@ function viewMe(){
 
 	axios.get('http://localhost:8000/api/v1/users/me', config)
 	.then(function (response){
+		$('#userProfile').empty();
+		document.getElementById('edited').style.visibility = "visible"
+		document.getElementById('deleted').style.visibility = "visible"
 		var uFname = response.data.user.first_name
 		var uLname = response.data.user.last_name
 		var uMail = response.data.user.email
@@ -166,6 +176,7 @@ function userCase(){
 			$('#searchResult').empty();
 			response.data.data.forEach(function($fraud){
  			var file = $fraud.fraudcase_files.data;
+ 			console.log(file);
  			var email = $fraud.fraud_emails.data;
  			var website = $fraud.fraud_websites.data;
  			var c_file = "";
@@ -181,8 +192,7 @@ function userCase(){
  						c_file += $file.pictur_url
  					}
  					else{
- 						c_file += ", " + $file.pictur_url
-
+ 						c_file += ", " + $file.picture_url
  					}
  				})
  			}
@@ -210,16 +220,25 @@ function userCase(){
  					}
  					else{
  						c_website += ", " + $website.website_url
-
  					}
  				})
  			}
- 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name +"</h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><a href=\"#\" class=\"btn btn-info\">More Details</a></div></div></div></div>")
- 		})
-	})
-	.catch(function (error){
-		//console.log(error);
-	})
+ 			// $('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src="+ c_file + " class=\"rounded-circle img-fluid img-raised\"></div></div></div></div>")
+ 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src="+ c_file +" alt=\"Thumbnail Image\" class=\"rounded-circle img-fluid img-raised\"></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"use btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
+ 			})
+			$('.use').click(function(){
+				ida = $(this).attr('id');
+				// console.log(ids);
+				$('#fullCase').empty();
+				fullShowCase();
+				setTimeout(function(){
+					$('#viewFullFraudModal').modal();
+				}, 250);
+			})
+		})
+		.catch(function (error){
+			//console.log(error);
+		})
 	})
 }
 
@@ -265,6 +284,7 @@ function logOut(){
 /*
 *	Show All reported fraud Cases
 */
+var ida;
 function showAllFrauds(){
 	axios.get('http://localhost:8000/api/v1/frauds')
 	.then(function (response){
@@ -320,20 +340,53 @@ function showAllFrauds(){
  					}
  				})
  			}
- 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name +"</h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><a href=\"#\" class=\"btn btn-info\">More Details</a></div></div></div></div>")
+ 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"all btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
  		})
+		$(".all").click(function(){
+			ida = $(this).attr('id');
+			// console.log(ids);
+			$('#fullCase').empty();
+			fullShowCase();
+			setTimeout(function(){
+				$('#viewFullFraudModal').modal();
+			}, 250);
+		})
 	})
 	.catch(function (error){
 		//console.log(error);
 	})
 }
 
+
+function fullShowCase(){
+	axios.get('http://localhost:8000/api/v1/fraud/' + ida)
+ 	.then(function (response){
+ 		// console.log(ids)
+ 		var startDate = response.data.data.scam_start_date;
+ 		var startRealize = response.data.data.scam_realization_date;
+ 		var amount = response.data.data.amount_scammed_off;
+ 		var scammerName = response.data.data.scammer_name;
+ 		var scammerRealName = response.data.data.scammer_real_name;
+ 		var itemName = response.data.data.item_name;
+ 		// var mail = response.data.data.fraud_emails.data[0].email;
+ 		// var account_name = response.data.data.fraud_accounts.data[0].account_name;
+ 		// var account_no = response.data.data.fraud_accounts.data[0].account_no;
+ 		// var web_url = response.data.data.fraud_websites.data[0].website_url;
+ 		// var number = response.data.data.mobiles.data[0].phone_number;
+ 		// var file = response.data.data.fraudcase_files.data[0].pictur_url;
+ 		$('#fullCase').append("<div class=\"col-md-12\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ startDate +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ scammerName+ " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + amount +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ startRealize +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ scammerRealName +"</h6><h6 class=\"card-text\">ITEM NAME : "+ itemName +"</h6><div class=\"text-center\"></div></div></div></div>")
+ 	
+ 	})
+	.catch(function (error){
+		//console.log(error);
+	})
+}
 /*
 *	Report a fraud case
 */
 function reportFraud(){
+	fraudErrorResult.innerHTML = "";
 	var start_date = document.getElementById('scam_start_date').value
-	// console.log(start_date)
 	var realize_date = document.getElementById('scam_realization_date').value
 	var s_date = moment(start_date, 'DD/MM/YYYY').format('YYYY/MM/DD')
 	var r_date = moment(realize_date, 'DD/MM/YYYY').format('YYYY/MM/DD')
@@ -375,11 +428,13 @@ function reportFraud(){
 		}
 		fraudData.append('accountData', JSON.stringify(accountArray));
 
+
 		let emailArray = [];
 		let emails = $('.scammer-email');
 		for(let i = 0; i < emails.length; i++){
 			let email = emails[i];
 			if (email.value){
+				console.log("ddf "+ email.value);
 				emailArray.push({email:email.value});
 			}
 		}
@@ -407,7 +462,7 @@ function reportFraud(){
 			}
 		}
 		fraudData.append('websiteData', JSON.stringify(websiteArray));
-
+		console.log(fraudData);
 
 		axios.post('http://localhost:8000/api/v1/frauds', fraudData)
 		.then(function (response){
@@ -450,6 +505,7 @@ function updateFraud(){
  *
  *
  */
+ var ids;
 function search(){
  	var keyword = document.getElementById('searchbox').value;
  	var searcherror = document.getElementById('searcherror');
@@ -463,6 +519,7 @@ function search(){
  		searcherror.innerHTML = "";
  		$('#searchResult').empty();
  		$('#allFrauds').empty();
+
  		response.data.data.forEach(function($fraud){
  			var file = $fraud.fraudcase_files.data;
  			var email = $fraud.fraud_emails.data;
@@ -513,9 +570,44 @@ function search(){
  					}
  				})
  			}
- 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name +"</h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><a href=\"#\" class=\"btn btn-info\">More Details</a></div></div></div></div>")
- 		})
+ 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"sea btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
+ 			
+ 			})
+				$(".sea").click(function(){
+					ids = $(this).attr('id');
+					// console.log(ids);
+					$('#searchCase').empty();
+					fullSearchCase();
+					setTimeout(function(){
+						$('#viewFullSearchModal').modal();
+					}, 250);
+				})
 	})
+	.catch(function (error){
+		//console.log(error);
+	})
+}
+
+
+function fullSearchCase(){
+	axios.get('http://localhost:8000/api/v1/fraud/' + ids)
+ 	.then(function (response){
+ 		// console.log(ids)
+ 		var startDate = response.data.data.scam_start_date;
+ 		var startRealize = response.data.data.scam_realization_date;
+ 		var amount = response.data.data.amount_scammed_off;
+ 		var scammerName = response.data.data.scammer_name;
+ 		var scammerRealName = response.data.data.scammer_real_name;
+ 		var itemName = response.data.data.item_name;
+ 		// var mail = response.data.data.fraud_emails.data[0].email;
+ 		// var account_name = response.data.data.fraud_accounts.data[0].account_name;
+ 		// var account_no = response.data.data.fraud_accounts.data[0].account_no;
+ 		// var web_url = response.data.data.fraud_websites.data[0].website_url;
+ 		// var number = response.data.data.mobiles.data[0].phone_number;
+ 		// var file = response.data.data.fraudcase_files.data[0].pictur_url;
+ 		$('#searchCase').append("<div class=\"col-md-12\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ startDate +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ scammerName+ " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + amount +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ startRealize +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ scammerRealName +"</h6><h6 class=\"card-text\">ITEM NAME : "+ itemName +"</h6><div class=\"text-center\"></div></div></div></div>")
+ 	
+ 	})
 	.catch(function (error){
 		//console.log(error);
 	})
@@ -525,3 +617,4 @@ function search(){
  *
  *
  */
+

@@ -44,13 +44,13 @@
             <div class="collapse navbar-collapse justify-content-end" data-nav-image="assets/img/blurred-image-1.jpg">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/report.html">Report Fraud</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/profile.html">My Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/allfrauds.html">My Reports</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="C:/xampp/htdocs/consume/webApp/allfrauds.html">All Frauds</a>
@@ -191,12 +191,12 @@
                                 <div class="row account-field">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="account-information" placeholder="Account Name">
+                                            <input type="text" class="form-control account-name" id="account-information" placeholder="Account Name">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <select id="bank-id" name="" class="form-control">
+                                            <select id="bank-id" name="" class="form-control bankAccount-id">
                                                 <option value="1">First Bank PLC</option>
                                                 <option value="2">Union Bank of Nigeria PLC</option>
                                                 <option value="3">Zenith Bank PLC</option>
@@ -220,7 +220,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="tel" class="form-control" id="account-number" placeholder="Account Number">
+                                            <input type="tel" class="form-control account-no" id="account-number" placeholder="Account Number">
                                         </div>
                                     </div>                    
                                 </div>
@@ -241,7 +241,7 @@
                                 <div class="row email-field">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" id="email" placeholder="Scammer's Email">
+                                            <input type="email" class="form-control scammer-email" id="email" placeholder="Scammer's Email">
                                         </div>
                                     </div>
                                 </div>
@@ -260,12 +260,12 @@
                                 <div class="row website-field">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="url" class="form-control" id="website" placeholder="Website Involved">
+                                            <input type="url" class="form-control web-url" id="website" placeholder="Website Involved">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <select id="bank-id" name="" class="form-control">
+                                            <select id="bank-id" name="" class="form-control bankWebsite-id">
                                                 <option value="1">First Bank PLC</option>
                                                 <option value="2">Union Bank of Nigeria PLC</option>
                                                 <option value="3">Zenith Bank PLC</option>
@@ -305,7 +305,7 @@
                                 <div class="row mobile-field">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="url" class="form-control" id="mobile-number" placeholder="Website Used">
+                                            <input type="url" class="form-control phone-number" id="mobile-number" placeholder="Website Used">
                                         </div>
                                     </div>
                                 </div>
