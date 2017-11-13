@@ -176,7 +176,6 @@ function userCase(){
 			$('#searchResult').empty();
 			response.data.data.forEach(function($fraud){
  			var file = $fraud.fraudcase_files.data;
- 			console.log(file);
  			var email = $fraud.fraud_emails.data;
  			var website = $fraud.fraud_websites.data;
  			var c_file = "";
@@ -184,16 +183,17 @@ function userCase(){
  			var c_website = "";
 
  			if(file.length == 0){
- 				c_file = "<a style=\"color:#f4eeee\">Not Provided</a>";
+ 				c_file = "";
  			}
  			else{
  				$fraud.fraudcase_files.data.forEach(function($file){
  					if(c_file.length == 0){
- 						c_file += $file.pictur_url
+ 						c_file += $file.picture_url
  					}
  					else{
  						c_file += ", " + $file.picture_url
  					}
+
  				})
  			}
  			if(email.length == 0){
@@ -223,8 +223,7 @@ function userCase(){
  					}
  				})
  			}
- 			// $('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src="+ c_file + " class=\"rounded-circle img-fluid img-raised\"></div></div></div></div>")
- 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src="+ c_file +" alt=\"Thumbnail Image\" class=\"rounded-circle img-fluid img-raised\"></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"use btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
+ 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src= \"http://localhost:8000/"+c_file +" \"class=\"thumbnail img-responsive \" style=\"height:200px;width:200px\"></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"use btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
  			})
 			$('.use').click(function(){
 				ida = $(this).attr('id');
@@ -299,15 +298,15 @@ function showAllFrauds(){
  			var c_website = "";
 
  			if(file.length == 0){
- 				c_file = "<a style=\"color:#f4eeee\">Not Provided</a>";
+ 				c_file = "";
  			}
  			else{
  				$fraud.fraudcase_files.data.forEach(function($file){
  					if(c_file.length == 0){
- 						c_file += $file.pictur_url
+ 						c_file += $file.picture_url
  					}
  					else{
- 						c_file += ", " + $file.pictur_url
+ 						c_file += ", " + $file.picture_url
 
  					}
  				})
@@ -340,7 +339,7 @@ function showAllFrauds(){
  					}
  				})
  			}
- 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"all btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
+ 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src= \"http://localhost:8000/"+c_file +" \"class=\"thumbnail img-responsive \" style=\"height:200px;width:200px\"></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"all btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
  		})
 		$(".all").click(function(){
 			ida = $(this).attr('id');
@@ -373,7 +372,7 @@ function fullShowCase(){
  		// var account_no = response.data.data.fraud_accounts.data[0].account_no;
  		// var web_url = response.data.data.fraud_websites.data[0].website_url;
  		// var number = response.data.data.mobiles.data[0].phone_number;
- 		// var file = response.data.data.fraudcase_files.data[0].pictur_url;
+ 		// var file = response.data.data.fraudcase_files.data[0].picture_url;
  		$('#fullCase').append("<div class=\"col-md-12\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ startDate +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ scammerName+ " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + amount +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ startRealize +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ scammerRealName +"</h6><h6 class=\"card-text\">ITEM NAME : "+ itemName +"</h6><div class=\"text-center\"></div></div></div></div>")
  	
  	})
@@ -529,15 +528,15 @@ function search(){
  			var c_website = "";
 
  			if(file.length == 0){
- 				c_file = "<a style=\"color:#f4eeee\">Not Provided</a>";
+ 				c_file = "";
  			}
  			else{
  				$fraud.fraudcase_files.data.forEach(function($file){
  					if(c_file.length == 0){
- 						c_file += $file.pictur_url
+ 						c_file += $file.picture_url
  					}
  					else{
- 						c_file += ", " + $file.pictur_url
+ 						c_file += ", " + $file.picture_url
 
  					}
  				})
@@ -570,7 +569,8 @@ function search(){
  					}
  				})
  			}
- 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ c_file +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"sea btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
+
+ 			$('#searchResult').append("<div class=\"col-sm-6 col-md-3\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src= \"http://localhost:8000/"+c_file +" \"class=\"thumbnail img-responsive \" style=\"height:200px;width:200px\"></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ $fraud.scammer_name + " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + $fraud.amount_scammed_off +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ c_email +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ c_website +"</h6><div class=\"text-center\"><button type=\"button\" class=\"sea btn btn-info\" data-dismiss=\"modal\" data-toggle=\"modal\"  id= " +  $fraud.id + ">More Details</button></div></div></div></div>")
  			
  			})
 				$(".sea").click(function(){
@@ -592,7 +592,7 @@ function search(){
 function fullSearchCase(){
 	axios.get('http://localhost:8000/api/v1/fraud/' + ids)
  	.then(function (response){
- 		// console.log(ids)
+ 		var fraud = response
  		var startDate = response.data.data.scam_start_date;
  		var startRealize = response.data.data.scam_realization_date;
  		var amount = response.data.data.amount_scammed_off;
@@ -604,8 +604,8 @@ function fullSearchCase(){
  		// var account_no = response.data.data.fraud_accounts.data[0].account_no;
  		// var web_url = response.data.data.fraud_websites.data[0].website_url;
  		// var number = response.data.data.mobiles.data[0].phone_number;
- 		// var file = response.data.data.fraudcase_files.data[0].pictur_url;
- 		$('#searchCase').append("<div class=\"col-md-12\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><h6 class=\"card-title\">"+ startDate +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ scammerName+ " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + amount +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ startRealize +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ scammerRealName +"</h6><h6 class=\"card-text\">ITEM NAME : "+ itemName +"</h6><div class=\"text-center\"></div></div></div></div>")
+ 		// var file = response.data.data.fraudcase_files.data[0].picture_url;
+ 		$('#searchCase').append("<div class=\"col-md-12\"><div class=\"card\"><div class=\"card-block\"><div class=\"text-center\"><img src= \"http://localhost:8000/"+c_file +" \"class=\"thumbnail img-responsive \" style=\"height:200px;width:200px\"><h6 class=\"card-title\">"+ startDate +"</h6></div><h6 class=\"card-text\">SCAMMER'S NAME : "+ scammerName+ " </h6><h6 class=\"card-text\">AMOUNT INVOLVED : "+"₦" + amount +"</h6><h6 class=\"card-text\">SCAM EMAIL : "+ startRealize +"</h6><h6 class=\"card-text\">SCAM WEBSITE : "+ scammerRealName +"</h6><h6 class=\"card-text\">ITEM NAME : "+ itemName +"</h6><div class=\"text-center\"></div></div></div></div>")
  	
  	})
 	.catch(function (error){
